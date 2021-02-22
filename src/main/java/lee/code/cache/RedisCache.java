@@ -2,6 +2,7 @@ package lee.code.cache;
 
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -11,9 +12,13 @@ public class RedisCache extends JavaPlugin {
 
     @Getter private JedisPool shopsPool;
     @Getter private JedisPool essentialsPool;
+    @Getter private JedisPool chunksPool;
 
     @Override
     public void onEnable() {
+        Jedis jedis = new Jedis("localhost");
+        jedis.flushAll();
+
         JedisPoolConfig poolConfig = buildPoolConfig();
 
         //GoldmanShops
@@ -21,6 +26,9 @@ public class RedisCache extends JavaPlugin {
 
         //GoldmanEssentials
         this.essentialsPool = new JedisPool(poolConfig, "localhost");
+
+        //GoldmanChunks
+        this.chunksPool = new JedisPool(poolConfig, "localhost");
     }
 
     private JedisPoolConfig buildPoolConfig() {
@@ -42,6 +50,7 @@ public class RedisCache extends JavaPlugin {
     public void onDisable() {
         shopsPool.destroy();
         essentialsPool.destroy();
+        chunksPool.destroy();
     }
 
     public static RedisCache getPlugin() {

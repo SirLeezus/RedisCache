@@ -15,4 +15,10 @@ public class CacheAPI {
         RedisCache plugin = RedisCache.getPlugin();
         return plugin.getEssentialsPool();
     }
+
+    //GoldmanChunks Plugin
+    public JedisPool getChunksPool() {
+        RedisCache plugin = RedisCache.getPlugin();
+        return plugin.getChunksPool();
+    }
 }
