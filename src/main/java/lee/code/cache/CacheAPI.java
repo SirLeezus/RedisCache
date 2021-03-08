@@ -22,4 +22,10 @@ public class CacheAPI {
         RedisCache plugin = RedisCache.getPlugin();
         return plugin.getChunksPool();
     }
+
+    //GoldmanChunks Plugin
+    public JedisPool getNPCPool() {
+        RedisCache plugin = RedisCache.getPlugin();
+        return plugin.getNpcPool();
+    }
 }

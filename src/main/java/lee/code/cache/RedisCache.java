@@ -11,6 +11,7 @@ public class RedisCache extends JavaPlugin {
     @Getter private JedisPool shopsPool;
     @Getter private JedisPool essentialsPool;
     @Getter private JedisPool chunksPool;
+    @Getter private JedisPool npcPool;
 
     @Override
     public void onEnable() {
@@ -30,6 +31,9 @@ public class RedisCache extends JavaPlugin {
 
         //GoldmanChunks
         this.chunksPool = new JedisPool(poolConfig, "184.95.51.250", 6380, 5000, "3NBtQUaUNnsxp5XMWp9AAE6d794ncecP2cV7m5HsBA8NrusWFj");
+
+        //GoldmanNPC
+        this.npcPool = new JedisPool(poolConfig, "184.95.51.250", 6380, 5000, "3NBtQUaUNnsxp5XMWp9AAE6d794ncecP2cV7m5HsBA8NrusWFj");
     }
 
     private JedisPoolConfig buildPoolConfig() {
@@ -46,6 +50,7 @@ public class RedisCache extends JavaPlugin {
         shopsPool.destroy();
         essentialsPool.destroy();
         chunksPool.destroy();
+        npcPool.destroy();
     }
 
     public static RedisCache getPlugin() {
