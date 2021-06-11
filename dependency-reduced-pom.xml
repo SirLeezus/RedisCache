@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.example</groupId>
+  <groupId>lee.code.redis</groupId>
   <artifactId>RedisCache</artifactId>
   <version>1.0.0</version>
   <build>
@@ -19,8 +19,16 @@
     <finalName>${project.artifactId}</finalName>
     <plugins>
       <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.1</version>
+        <version>3.2.4</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -31,9 +39,17 @@
               <relocations>
                 <relocation>
                   <pattern>redis.clients.jedis</pattern>
-                  <shadedPattern>lee.code.cache.jedis</shadedPattern>
+                  <shadedPattern>jedis</shadedPattern>
                 </relocation>
               </relocations>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/**</exclude>
+                  </excludes>
+                </filter>
+              </filters>
             </configuration>
           </execution>
         </executions>
@@ -42,75 +58,22 @@
   </build>
   <repositories>
     <repository>
-      <id>papermc</id>
-      <url>https://papermc.io/repo/repository/maven-public/</url>
+      <id>spigot-repo</id>
+      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>com.destroystokyo.paper</groupId>
-      <artifactId>paper-api</artifactId>
-      <version>1.16.5-R0.1-SNAPSHOT</version>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot-api</artifactId>
+      <version>1.17-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>adventure-api</artifactId>
-          <groupId>net.kyori</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>adventure-text-serializer-gson</artifactId>
-          <groupId>net.kyori</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>adventure-text-serializer-legacy</artifactId>
-          <groupId>net.kyori</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>adventure-text-serializer-plain</artifactId>
-          <groupId>net.kyori</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>commons-lang</artifactId>
-          <groupId>commons-lang</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>jsr305</artifactId>
-          <groupId>com.google.code.findbugs</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>json-simple</artifactId>
-          <groupId>com.googlecode.json-simple</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>guava</artifactId>
-          <groupId>com.google.guava</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>gson</artifactId>
-          <groupId>com.google.code.gson</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>bungeecord-chat</artifactId>
-          <groupId>net.md-5</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>snakeyaml</artifactId>
-          <groupId>org.yaml</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>asm</artifactId>
-          <groupId>org.ow2.asm</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>asm-commons</artifactId>
-          <groupId>org.ow2.asm</groupId>
-        </exclusion>
-      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.20</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
-  <properties>
-    <maven.compiler.target>11</maven.compiler.target>
-    <maven.compiler.source>11</maven.compiler.source>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
 </project>
