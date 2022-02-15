@@ -1,6 +1,5 @@
 package lee.code.cache;
 
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 public class CacheAPI {
@@ -27,5 +26,17 @@ public class CacheAPI {
     public JedisPool getNPCPool() {
         RedisCache plugin = RedisCache.getPlugin();
         return plugin.getNpcPool();
+    }
+
+    //GoldmanPets Plugin
+    public JedisPool getPetPool() {
+        RedisCache plugin = RedisCache.getPlugin();
+        return plugin.getPetPool();
+    }
+
+    //GoldmanTrails Plugin
+    public JedisPool getTrailPool() {
+        RedisCache plugin = RedisCache.getPlugin();
+        return plugin.getTrailPool();
     }
 }

@@ -6,41 +6,52 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+import java.time.Duration;
+
 public class RedisCache extends JavaPlugin {
 
     @Getter private JedisPool shopsPool;
     @Getter private JedisPool essentialsPool;
     @Getter private JedisPool chunksPool;
     @Getter private JedisPool npcPool;
+    @Getter private JedisPool petPool;
+    @Getter private JedisPool trailPool;
+    @Getter private Data data;
 
     @Override
     public void onEnable() {
+        this.data = new Data(this);
 
-        Jedis jedis = new Jedis("184.95.51.250", 6380, 5000);
+        Jedis jedis = new Jedis(data.getHostIP(), data.getHostPort(), data.getHostTimeout());
+        jedis.auth(data.getHostPass());
 
-        jedis.auth("3NBtQUaUNnsxp5XMWp9AAE6d794ncecP2cV7m5HsBA8NrusWFj");
         jedis.flushAll();
-
         JedisPoolConfig poolConfig = buildPoolConfig();
 
         //GoldmanShops
-        this.shopsPool = new JedisPool(poolConfig, "184.95.51.250", 6380, 5000, "3NBtQUaUNnsxp5XMWp9AAE6d794ncecP2cV7m5HsBA8NrusWFj");
+        this.shopsPool = new JedisPool(poolConfig, data.getHostIP(), data.getHostPort(), data.getHostTimeout(), data.getHostPass());
 
         //GoldmanEssentials
-        this.essentialsPool = new JedisPool(poolConfig, "184.95.51.250", 6380, 5000, "3NBtQUaUNnsxp5XMWp9AAE6d794ncecP2cV7m5HsBA8NrusWFj");
+        this.essentialsPool = new JedisPool(poolConfig, data.getHostIP(), data.getHostPort(), data.getHostTimeout(), data.getHostPass());
 
         //GoldmanChunks
-        this.chunksPool = new JedisPool(poolConfig, "184.95.51.250", 6380, 5000, "3NBtQUaUNnsxp5XMWp9AAE6d794ncecP2cV7m5HsBA8NrusWFj");
+        this.chunksPool = new JedisPool(poolConfig, data.getHostIP(), data.getHostPort(), data.getHostTimeout(), data.getHostPass());
 
         //GoldmanNPC
-        this.npcPool = new JedisPool(poolConfig, "184.95.51.250", 6380, 5000, "3NBtQUaUNnsxp5XMWp9AAE6d794ncecP2cV7m5HsBA8NrusWFj");
+        this.npcPool = new JedisPool(poolConfig, data.getHostIP(), data.getHostPort(), data.getHostTimeout(), data.getHostPass());
+
+        //GoldmanPets
+        this.petPool = new JedisPool(poolConfig, data.getHostIP(), data.getHostPort(), data.getHostTimeout(), data.getHostPass());
+
+        //GoldmanTrails
+        this.trailPool = new JedisPool(poolConfig, data.getHostIP(), data.getHostPort(), data.getHostTimeout(), data.getHostPass());
     }
 
     private JedisPoolConfig buildPoolConfig() {
         JedisPoolConfig poolConfig = new JedisPoolConfig();
         poolConfig.setMaxTotal(1000);
         poolConfig.setMaxIdle(32);
-        poolConfig.setMaxWaitMillis(100 * 1000);
+        poolConfig.setMaxWait(Duration.ofMillis(100 * 1000));
         poolConfig.setTestOnBorrow(false);
         return poolConfig;
     }
@@ -51,6 +62,8 @@ public class RedisCache extends JavaPlugin {
         essentialsPool.destroy();
         chunksPool.destroy();
         npcPool.destroy();
+        petPool.destroy();
+        trailPool.destroy();
     }
 
     public static RedisCache getPlugin() {
