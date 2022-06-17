@@ -39,4 +39,10 @@ public class CacheAPI {
         RedisCache plugin = RedisCache.getPlugin();
         return plugin.getTrailPool();
     }
+
+    //GoldmanGuilds Plugin
+    public JedisPool getGuildPool() {
+        RedisCache plugin = RedisCache.getPlugin();
+        return plugin.getGuildPool();
+    }
 }

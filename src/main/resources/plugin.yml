@@ -1,5 +1,5 @@
 name: RedisCache
 main: lee.code.cache.RedisCache
 version: ${project.version}
-api-version: 1.16
+api-version: 1.19
 author: Lee

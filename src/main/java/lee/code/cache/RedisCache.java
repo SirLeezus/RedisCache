@@ -16,6 +16,7 @@ public class RedisCache extends JavaPlugin {
     @Getter private JedisPool npcPool;
     @Getter private JedisPool petPool;
     @Getter private JedisPool trailPool;
+    @Getter private JedisPool guildPool;
     @Getter private Data data;
 
     @Override
@@ -45,6 +46,9 @@ public class RedisCache extends JavaPlugin {
 
         //GoldmanTrails
         this.trailPool = new JedisPool(poolConfig, data.getHostIP(), data.getHostPort(), data.getHostTimeout(), data.getHostPass());
+
+        //GoldmanGuilds
+        this.guildPool = new JedisPool(poolConfig, data.getHostIP(), data.getHostPort(), data.getHostTimeout(), data.getHostPass());
     }
 
     private JedisPoolConfig buildPoolConfig() {
@@ -64,6 +68,7 @@ public class RedisCache extends JavaPlugin {
         npcPool.destroy();
         petPool.destroy();
         trailPool.destroy();
+        guildPool.destroy();
     }
 
     public static RedisCache getPlugin() {

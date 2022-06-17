@@ -4,7 +4,9 @@ import lombok.Getter;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class Data {
+
     protected RedisCache plugin;
+
     public Data(RedisCache plugin) {
         this.plugin = plugin;
         loadConfig();
